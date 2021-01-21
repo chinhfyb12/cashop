@@ -1,0 +1,151 @@
+.header .logo {
+  padding: 2rem;
+}
+
+.header .logo a {
+  display: block;
+  width: 275px;
+  margin: 0 auto;
+}
+
+.header .container-action {
+  padding: 2rem 2rem 2rem 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.header .container-action .box-account {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  margin-bottom: 10px;
+}
+
+.header .container-action .box-account a {
+  color: black;
+  font-size: 1.3rem;
+  -webkit-transition: .3s;
+  transition: .3s;
+}
+
+.header .container-action .box-account a:hover {
+  color: #098777;
+}
+
+.header .container-action .box-account p {
+  font-size: 1.1rem;
+  margin: 0 10px;
+  color: #616161;
+}
+
+.header .container-action .box-tools {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.header .container-action .box-tools .tool {
+  margin-left: 10px;
+  height: 45px;
+}
+
+.header .container-action .box-tools .tool .ant-btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border: none;
+}
+
+.header .container-action .box-tools .tool .ant-input {
+  border: none;
+  -webkit-box-shadow: unset;
+          box-shadow: unset;
+  height: 100%;
+  background: #efefef;
+  font-size: 1.4rem;
+}
+
+.header .container-action .box-tools .tool .ant-input-group-addon {
+  background: #efefef;
+}
+
+.header .container-action .box-tools .tool .ant-input-group-addon .ant-btn {
+  background: #efefef;
+  -webkit-box-shadow: unset;
+          box-shadow: unset;
+}
+
+.header .container-action .box-tools .tool .ant-input-search {
+  height: 100%;
+}
+
+.header .container-action .box-tools .tool .ant-input-search .ant-input-group {
+  height: 100%;
+}
+
+.header .container-action .box-tools .tool .ant-badge {
+  height: 100%;
+}
+
+.header .container-action .box-tools .tool .ant-badge .ant-btn {
+  height: 100%;
+  background: #efefef;
+  -webkit-transition: .3s;
+  transition: .3s;
+}
+
+.header .container-action .box-tools .tool .ant-badge .ant-btn .anticon-shopping {
+  color: black;
+  margin-left: 10px;
+}
+
+.header .container-action .box-tools .tool .ant-badge .ant-btn:hover {
+  background: #d2d2d2;
+}
+
+::-webkit-input-placeholder {
+  font-size: 1.2rem;
+}
+
+:-ms-input-placeholder {
+  font-size: 1.2rem;
+}
+
+::-ms-input-placeholder {
+  font-size: 1.2rem;
+}
+
+::placeholder {
+  font-size: 1.2rem;
+}
+
+@media only screen and (max-width: 768px) {
+  .container-action {
+    display: none !important;
+  }
+}
+/*# sourceMappingURL=Header.css.map */
