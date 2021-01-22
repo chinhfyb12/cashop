@@ -1,0 +1,24 @@
+.footer {
+    padding: 1rem;
+    background: #f7f7f7;
+    .ant-col {
+        padding: 1rem;
+        h5.ant-typography {
+            font-size: 1.5rem;
+        }
+        span.ant-typography {
+            font-size: 1.1rem;
+        }
+    }
+}
+.ant-row {
+    > span.ant-typography {
+        font-size: 0.9rem;
+        width: 100%;
+        text-align: center;
+        padding: 0.5rem;
+        font-family: sans-serif;
+        background: #009c88;
+        color: white;
+    }
+}

@@ -1,8 +1,3 @@
-.navbar_root {
-  height: 100vh;
-  overflow: hidden;
-}
-
 .navbar {
   z-index: 999;
 }
@@ -39,10 +34,12 @@
 .navbar-nav_mobile {
   width: 100%;
   display: none;
-  -webkit-transform: translateY(-150%);
-          transform: translateY(-150%);
+  -webkit-transform: translateX(-100%);
+          transform: translateX(-100%);
   -webkit-transition: .3s;
   transition: .3s;
+  position: absolute;
+  z-index: 99;
 }
 
 .navbar-nav_mobile .nav-list {
@@ -101,8 +98,8 @@
 }
 
 .navbar-nav_mobile.active {
-  -webkit-transform: translateY(0);
-          transform: translateY(0);
+  -webkit-transform: translateX(0);
+          transform: translateX(0);
 }
 
 .navbar .navbar_mobile_tools {
@@ -131,18 +128,6 @@
 .navbar .navbar_mobile_tools .box-tool .ant-btn:hover {
   background: white;
   color: black;
-}
-
-.hello {
-  display: none;
-  width: 100%;
-  height: 100%;
-  background: #0000002e;
-  z-index: 998;
-}
-
-.hello.active {
-  display: block;
 }
 
 @media only screen and (max-width: 768px) {

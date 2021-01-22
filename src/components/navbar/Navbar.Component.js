@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Col, Dropdown, Menu, Row, Divider, Badge, Button } from 'antd';
+import { Col, Dropdown, Menu, Row, Divider, Badge, Button, Affix } from 'antd';
 import { Link } from 'react-router-dom';
-import { DownOutlined, MenuOutlined, ShoppingOutlined, UserOutlined, SearchOutlined } from '@ant-design/icons';
+import { DownOutlined, MenuUnfoldOutlined, ShoppingOutlined, UserOutlined, SearchOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import './Navbar.css';
 
 //navbar desktop
@@ -62,9 +62,6 @@ const popMenuD = (
                     <Menu.SubMenu title='Boy Group'>
                         <Menu.Item>
                             <Link to="/">BT21</Link>
-                        </Menu.Item>
-                        <Menu.Item>
-                            <Link to="/">Monsta X</Link>
                         </Menu.Item>
                     </Menu.SubMenu>
                 </Menu>
@@ -227,10 +224,6 @@ const popMenuM = (
                         <Menu.Item className="nav-list_1_m_item">
                             <Link to='/'>BT21</Link>
                         </Menu.Item>
-                        <Divider />
-                        <Menu.Item className="nav-list_1_m_item">
-                            <Link to='/'>Monsta X</Link>
-                        </Menu.Item>
                     </Menu>
                 )} trigger={['click']} >
                     <DownOutlined />
@@ -367,157 +360,160 @@ const Navbar = () => {
     const [isMenuShow, setMenuShow] = useState(false);
 
     return (
-        <div className="navbar_root">
-            <div className="container-fluid navbar">
-                <div className="navbar-nav_desktop">
-                    <Row>
-                        <Col span={24}>
-                            <Menu className="nav-list">
-                                <Menu.Item className="nav-list_item">
-                                    <Dropdown overlay={beautyMenuD}>
-                                        <Link to='/' className="ant-dropdown-link">
-                                            K-BEAUTY <DownOutlined />
-                                        </Link>
-                                    </Dropdown>
-                                </Menu.Item>
-                                <Menu.Item className="nav-list_item">
-                                    <Dropdown overlay={popMenuD}>
-                                        <Link to='/' className="ant-dropdown-link">
-                                            K-POP <DownOutlined />
-                                        </Link>
-                                    </Dropdown>
-                                </Menu.Item>
-                                <Menu.Item className="nav-list_item">
-                                    <Dropdown overlay={dramaMenuD}>
-                                        <Link to='/' className="ant-dropdown-link">
-                                            K-DRAMA <DownOutlined />
-                                        </Link>
-                                    </Dropdown>
-                                </Menu.Item>
-                                <Menu.Item className="nav-list_item">
-                                    <Dropdown overlay={fashionMenuD}>
-                                        <Link to='/' className="ant-dropdown-link">
-                                            K-FASHION <DownOutlined />
-                                        </Link>
-                                    </Dropdown>
-                                </Menu.Item>
-                                <Menu.Item className="nav-list_item">
-                                    <Dropdown overlay={lifeMenuD}>
-                                        <Link to='/' className="ant-dropdown-link">
-                                            K-LIFE <DownOutlined />
-                                        </Link>
-                                    </Dropdown>
-                                </Menu.Item>
-                            </Menu>
-                        </Col>
-                    </Row>
-                </div>
-                <div className='navbar_mobile_tools'>
-                    <Row>
-                        <Col span={12}>
-                            <div className="box-tool">
-                                <Button onClick={ () => setMenuShow(!isMenuShow)}>
-                                    <MenuOutlined />
-                                </Button>
-                            </div>
-                        </Col>
-                        <Col span={12} className="tools_user">
-                            <div className="box-tool">
-                                <Button>
-                                    <SearchOutlined />
-                                </Button>
-                            </div>
-                            <div className="box-tool" style={{margin: '0 15px'}}>
-                                <Badge count={1}>
-                                    <Button>
-                                        <ShoppingOutlined />
+        <Affix offsetTop={0}>
+            <div className="navbar_root">
+                <div className="container-fluid navbar">
+                    <div className="navbar-nav_desktop">
+                        <Row>
+                            <Col span={24}>
+                                <Menu className="nav-list">
+                                    <Menu.Item className="nav-list_item">
+                                        <Dropdown overlay={beautyMenuD}>
+                                            <Link to='/' className="ant-dropdown-link">
+                                                K-BEAUTY <DownOutlined />
+                                            </Link>
+                                        </Dropdown>
+                                    </Menu.Item>
+                                    <Menu.Item className="nav-list_item">
+                                        <Dropdown overlay={popMenuD}>
+                                            <Link to='/' className="ant-dropdown-link">
+                                                K-POP <DownOutlined />
+                                            </Link>
+                                        </Dropdown>
+                                    </Menu.Item>
+                                    <Menu.Item className="nav-list_item">
+                                        <Dropdown overlay={dramaMenuD}>
+                                            <Link to='/' className="ant-dropdown-link">
+                                                K-DRAMA <DownOutlined />
+                                            </Link>
+                                        </Dropdown>
+                                    </Menu.Item>
+                                    <Menu.Item className="nav-list_item">
+                                        <Dropdown overlay={fashionMenuD}>
+                                            <Link to='/' className="ant-dropdown-link">
+                                                K-FASHION <DownOutlined />
+                                            </Link>
+                                        </Dropdown>
+                                    </Menu.Item>
+                                    <Menu.Item className="nav-list_item">
+                                        <Dropdown overlay={lifeMenuD}>
+                                            <Link to='/' className="ant-dropdown-link">
+                                                K-LIFE <DownOutlined />
+                                            </Link>
+                                        </Dropdown>
+                                    </Menu.Item>
+                                </Menu>
+                            </Col>
+                        </Row>
+                    </div>
+                    <div className='navbar_mobile_tools'>
+                        <Row>
+                            <Col span={12}>
+                                <div className="box-tool">
+                                    <Button onClick={ () => setMenuShow(!isMenuShow)}>
+                                        {
+                                            isMenuShow ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />
+                                        }
                                     </Button>
-                                </Badge>
-                            </div>
-                            <div className="box-tool">
-                                <Button>
-                                    <UserOutlined />
-                                </Button>
-                            </div>
-                        </Col>
-                    </Row>
-                </div>
-                <div className={`${isMenuShow ? 'navbar-nav_mobile active' : 'navbar-nav_mobile'}`}>
-                    <Menu className='nav-list'>
-                        <Menu.Item  className='nav-list_item'>
-                            <Link to='/'>K-BEAUTY</Link>
-                            <p>
-                                <Dropdown 
-                                    overlay={beautyMenuM} 
-                                    trigger={['click']}
-                                    visible={visibleB} 
-                                    onVisibleChange={handleVisibleChangeB}
-                                >
-                                    <DownOutlined />
-                                </Dropdown>
-                            </p>
-                        </Menu.Item>
-                        <Divider />
-                        <Menu.Item  className='nav-list_item'>
-                            <Link to='/'>K-POP</Link>
-                            <p>
-                                <Dropdown 
-                                    overlay={popMenuM} 
-                                    trigger={['click']}
-                                    visible={visibleP} 
-                                    onVisibleChange={handleVisibleChangeP}
-                                >
-                                    <DownOutlined />
-                                </Dropdown>
-                            </p>
-                        </Menu.Item>
-                        <Divider />
-                        <Menu.Item  className='nav-list_item'>
-                            <Link to='/'>K-DRAMA</Link>
-                            <p>
-                                <Dropdown 
-                                    overlay={dramaMenuM} 
-                                    trigger={['click']}
-                                    visible={visibleD} 
-                                    onVisibleChange={handleVisibleChangeD}
-                                >
-                                    <DownOutlined />
-                                </Dropdown>
-                            </p>
-                        </Menu.Item>
-                        <Divider />
-                        <Menu.Item  className='nav-list_item'>
-                            <Link to='/'>K-FASHION</Link>
-                            <p>
-                                <Dropdown 
-                                    overlay={fashionMenuM} 
-                                    trigger={['click']}
-                                    visible={visibleF} 
-                                    onVisibleChange={handleVisibleChangeF}
-                                >
-                                    <DownOutlined />
-                                </Dropdown>
-                            </p>
-                        </Menu.Item>
-                        <Divider />
-                        <Menu.Item  className='nav-list_item'>
-                            <Link to='/'>K-LIFE</Link>
-                            <p>
-                                <Dropdown 
-                                    overlay={lifeMenuM} 
-                                    trigger={['click']}
-                                    visible={visibleL} 
-                                    onVisibleChange={handleVisibleChangeL}
-                                >
-                                    <DownOutlined />
-                                </Dropdown>
-                            </p>
-                        </Menu.Item>
-                    </Menu>
+                                </div>
+                            </Col>
+                            <Col span={12} className="tools_user">
+                                <div className="box-tool">
+                                    <Button>
+                                        <SearchOutlined />
+                                    </Button>
+                                </div>
+                                <div className="box-tool" style={{margin: '0 15px'}}>
+                                    <Badge count={1}>
+                                        <Button>
+                                            <ShoppingOutlined />
+                                        </Button>
+                                    </Badge>
+                                </div>
+                                <div className="box-tool">
+                                    <Button>
+                                        <UserOutlined />
+                                    </Button>
+                                </div>
+                            </Col>
+                        </Row>
+                    </div>
+                    <div className={`${isMenuShow ? 'navbar-nav_mobile active' : 'navbar-nav_mobile'}`}>
+                        <Menu className='nav-list'>
+                            <Menu.Item  className='nav-list_item'>
+                                <Link to='/'>K-BEAUTY</Link>
+                                <p>
+                                    <Dropdown 
+                                        overlay={beautyMenuM} 
+                                        trigger={['click']}
+                                        visible={visibleB} 
+                                        onVisibleChange={handleVisibleChangeB}
+                                    >
+                                        <DownOutlined />
+                                    </Dropdown>
+                                </p>
+                            </Menu.Item>
+                            <Divider />
+                            <Menu.Item  className='nav-list_item'>
+                                <Link to='/'>K-POP</Link>
+                                <p>
+                                    <Dropdown 
+                                        overlay={popMenuM} 
+                                        trigger={['click']}
+                                        visible={visibleP} 
+                                        onVisibleChange={handleVisibleChangeP}
+                                    >
+                                        <DownOutlined />
+                                    </Dropdown>
+                                </p>
+                            </Menu.Item>
+                            <Divider />
+                            <Menu.Item  className='nav-list_item'>
+                                <Link to='/'>K-DRAMA</Link>
+                                <p>
+                                    <Dropdown 
+                                        overlay={dramaMenuM} 
+                                        trigger={['click']}
+                                        visible={visibleD} 
+                                        onVisibleChange={handleVisibleChangeD}
+                                    >
+                                        <DownOutlined />
+                                    </Dropdown>
+                                </p>
+                            </Menu.Item>
+                            <Divider />
+                            <Menu.Item  className='nav-list_item'>
+                                <Link to='/'>K-FASHION</Link>
+                                <p>
+                                    <Dropdown 
+                                        overlay={fashionMenuM} 
+                                        trigger={['click']}
+                                        visible={visibleF} 
+                                        onVisibleChange={handleVisibleChangeF}
+                                    >
+                                        <DownOutlined />
+                                    </Dropdown>
+                                </p>
+                            </Menu.Item>
+                            <Divider />
+                            <Menu.Item  className='nav-list_item'>
+                                <Link to='/'>K-LIFE</Link>
+                                <p>
+                                    <Dropdown 
+                                        overlay={lifeMenuM} 
+                                        trigger={['click']}
+                                        visible={visibleL} 
+                                        onVisibleChange={handleVisibleChangeL}
+                                    >
+                                        <DownOutlined />
+                                    </Dropdown>
+                                </p>
+                            </Menu.Item>
+                        </Menu>
+                    </div>
                 </div>
             </div>
-            <span className={ isMenuShow ? 'hello active' : 'hello'} onClick={() => setMenuShow(false)}></span>
-        </div>
+        </Affix>
     )
 }
 

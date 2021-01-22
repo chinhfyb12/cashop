@@ -5,6 +5,22 @@
 .navbar-submenu .ant-menu-submenu-title, .ant-menu-sub.ant-menu-vertical a {
   font-size: 1.1rem;
 }
+.navbar-submenu .ant-menu-submenu-title:hover, .ant-menu-sub.ant-menu-vertical a:hover {
+  color: #098777;
+}
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
   background-color: unset;
+}
+.box-breadcrumb .ant-breadcrumb-link a, .box-breadcrumb .ant-breadcrumb-link{
+  font-size: 1rem;
+  text-transform: capitalize;
+}
+.box-breadcrumb .ant-breadcrumb-link {
+  color: #c1c1c1;
+}
+.box-breadcrumb .ant-breadcrumb-link a:hover {
+  color: #098777;
+}
+.ant-select-item-option-content {
+  font-size: 1rem;
 }

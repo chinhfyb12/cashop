@@ -1,0 +1,108 @@
+.home {
+  padding: 1.5rem 8.5rem;
+  background: #fffdfa;
+}
+
+.home .suggest-categories .title {
+  font-size: 2rem;
+  color: #4e4e4e;
+}
+
+.home .suggest-categories .col-link {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.home .suggest-categories .col-link .categories-link {
+  color: dimgrey;
+  font-size: 1.2rem;
+}
+
+.home .suggest-categories .col-link .categories-link:hover {
+  color: #098777;
+}
+
+.home .suggest-categories .ant-card {
+  padding: 1rem;
+  background: #f9f9f9;
+}
+
+.home .suggest-categories .ant-card .ant-card-meta-title {
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.home .categories {
+  padding: 1rem 0;
+}
+
+.home .categories .category {
+  padding: 1rem 0;
+}
+
+.home .categories .category .title {
+  font-size: 2rem;
+  color: #4e4e4e;
+}
+
+.home .categories .category .col-link {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.home .categories .category .col-link .categories-link {
+  color: dimgrey;
+  font-size: 1.2rem;
+}
+
+.home .categories .category .col-link .categories-link:hover {
+  color: #098777;
+}
+
+.home .categories .slick-slider {
+  width: 100%;
+}
+
+.home .categories .slick-slider .ant-col {
+  max-width: 100%;
+}
+
+.home .categories .slick-slider .slick-next {
+  right: -15px;
+  z-index: 1;
+}
+
+.home .categories .slick-slider .slick-prev {
+  left: -15px;
+  z-index: 1;
+}
+
+.home .categories .slick-slider .slick-arrow {
+  display: block;
+  color: #098777;
+  background: #098777b5;
+  width: 41px;
+  height: 42px;
+  border-radius: 50%;
+}
+
+@media only screen and (max-width: 768px) {
+  .home {
+    padding: 1.5rem 2.5rem;
+  }
+}
+/*# sourceMappingURL=Home.css.map */

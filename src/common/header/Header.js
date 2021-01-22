@@ -2,7 +2,7 @@ import { ShoppingOutlined } from '@ant-design/icons';
 import { Badge, Button, Col, Input, Row, Typography } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Navbar from '../../components/navbar/Navbar.Component';
+import Navbar from '../../components/navbar/Navbar.component';
 import logo from '../../images/3903482.jpg';
 import './Header.css';
 

@@ -1,0 +1,76 @@
+.box-login {
+  padding: 3rem 8.5rem 3rem 8.5rem;
+  background: #fffdfa;
+}
+
+.box-login .ant-row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.box-login .ant-row h3.ant-typography {
+  font-size: 2rem;
+}
+
+.box-login .ant-row form {
+  width: 300px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.box-login .ant-row form input {
+  border-radius: 0;
+  height: 40px;
+}
+
+.box-login .ant-row form > span {
+  margin: 20px 0;
+  border-radius: 0;
+  padding: 0 11px;
+}
+
+.box-login .ant-row form .ant-btn {
+  border-radius: 0;
+  color: white;
+  background-color: black;
+  height: 40px;
+}
+
+.box-login .ant-row .box-signup {
+  margin-top: 10px;
+  font-size: 1.1rem;
+  color: #8e8e8e;
+}
+
+.box-login .ant-row .box-signup a {
+  color: black;
+}
+
+@media only screen and (max-width: 768px) {
+  .box-login {
+    padding: 2rem 2.5rem 3rem 2.5rem;
+  }
+}
+/*# sourceMappingURL=Login.css.map */

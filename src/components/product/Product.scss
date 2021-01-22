@@ -1,0 +1,49 @@
+.box-product {
+    position: relative;
+    overflow: hidden;
+    transition: .3s;
+    &:hover {
+        box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.011), 0 6.7px 5.3px rgba(0, 0, 0, 0.016), 0 12.5px 10px rgba(0, 0, 0, 0.02), 0 22.3px 17.9px rgba(0, 0, 0, 0.024), 0 41.8px 33.4px rgba(0, 0, 0, 0.029), 0 100px 80px rgba(0, 0, 0, 0.04);
+    }
+    .ant-card-body {
+        .ant-card-meta-title {
+            font-size: 1rem;
+            text-transform: uppercase;
+            color: #098777;
+            text-align: center;
+        }
+        .ant-typography {
+            font-size: 1.1rem;
+            text-align: center;
+            color: #636363;
+            margin: 0;
+        }
+    }
+    .box-icon {
+        position: absolute;
+        position: absolute;
+        z-index: 1;
+        right: 20px;
+        top: 20px;
+        transform: translateX(200%);
+        transition: .3s;
+        .ant-btn {
+            border: 1px solid #098777;
+            color: #098777;
+            padding: 0;
+            width: 36px;
+            height: 35px;
+            font-size: 1.2rem;
+            border-radius: 50%;
+            &:hover {
+                transform: scale(1.08);
+                color: white;
+                background: #098777;
+                border: 1px solid white;
+            }
+        }
+    }
+    .box-icon.active {
+        transform: translateX(0);
+    }
+}

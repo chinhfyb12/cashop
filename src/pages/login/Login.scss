@@ -1,0 +1,48 @@
+.box-login {
+    padding: 3rem 8.5rem 3rem 8.5rem;
+    background: #fffdfa;
+    .ant-row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        h3.ant-typography {
+            font-size: 2rem;
+        }
+        form {
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            input {
+                border-radius: 0;
+                height: 40px;
+            }
+            > span {
+                margin: 20px 0;
+                border-radius: 0;
+                padding: 0 11px;
+            }
+            .ant-btn {
+                border-radius: 0;
+                color: white;
+                background-color: black;
+                height: 40px;
+            }
+        }
+        .box-signup {
+            margin-top: 10px;
+            font-size: 1.1rem;
+            color: #8e8e8e;
+            a {
+                color: black;
+            }
+        }
+    }
+}
+@media only screen and (max-width: 768px) {
+    .box-login {
+        padding: 2rem 2.5rem 3rem 2.5rem;
+    }
+}
