@@ -15,9 +15,10 @@ const SignUp = () => {
                     <Input.Password placeholder="Retype password"/>
                     <button type="submit" className="ant-btn">SIGN UP</button>
                 </form>
-                <div className="box-login">or <Link to="/">Login</Link></div>
+                <div className="btn-login">or <Link to="/login">Login</Link></div>
             </Row>
         </div>
     )
 }
+
 export default SignUp;

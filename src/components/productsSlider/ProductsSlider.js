@@ -1,6 +1,6 @@
 import { Col } from 'antd'
 import React, { useEffect, useState } from 'react'
-import Product from '../product/Product.component'
+import Product from '../product/Product'
 import Slider from "react-slick";
 
 const Products = (props) => {

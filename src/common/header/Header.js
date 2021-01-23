@@ -2,11 +2,16 @@ import { ShoppingOutlined } from '@ant-design/icons';
 import { Badge, Button, Col, Input, Row, Typography } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Navbar from '../../components/navbar/Navbar.component';
+import Navbar from '../../components/navbar/Navbar';
 import logo from '../../images/3903482.jpg';
 import './Header.css';
+import { useDispatch } from 'react-redux'
+import { showCartModel } from '../../store/actions'
 
 const Header = () => {
+
+    const dispatch = useDispatch();
+
     return (
         <div className="container-fluid header">
             <Row>
@@ -17,9 +22,9 @@ const Header = () => {
                 </Col>
                 <Col md={{span: 12}} className="container-action">
                     <div className="box-account">
-                        <Link to='/'>Sign in</Link>
+                        <Link to='/login'>Sign in</Link>
                         <p>or</p>
-                        <Link to='/'>Create an account</Link>
+                        <Link to='/sign-up'>Create an account</Link>
                     </div>
                     <div className="box-tools">
                         <div className="tool" style={{width: '60%'}}>
@@ -27,7 +32,7 @@ const Header = () => {
                         </div>
                         <div className="tool">
                             <Badge count={1}>
-                                <Button>
+                                <Button onClick={ () => dispatch(showCartModel) }>
                                     <Typography>
                                         CART
                                     </Typography>

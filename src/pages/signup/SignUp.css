@@ -63,13 +63,13 @@
   margin-top: 20px;
 }
 
-.box-sign-up .ant-row .box-login {
+.box-sign-up .ant-row .btn-login {
   margin-top: 10px;
   font-size: 1.1rem;
   color: #8e8e8e;
 }
 
-.box-sign-up .ant-row .box-login a {
+.box-sign-up .ant-row .btn-login a {
   color: black;
 }
 

@@ -2,7 +2,7 @@ import { ShoppingCartOutlined } from '@ant-design/icons';
 import { Card, Col, Row, List, Breadcrumb, Divider, Typography, Select, Button } from 'antd'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
-import Products from '../../components/products/Products.component';
+import Products from '../../components/products/Products';
 import './ProductDetail.css'
 
 const ProductDetail = () => {

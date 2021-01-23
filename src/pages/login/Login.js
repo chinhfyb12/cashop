@@ -13,7 +13,7 @@ const Login = () => {
                     <Input.Password placeholder="Password"/>
                     <button type="submit" className="ant-btn">SIGN IN</button>
                 </form>
-                <div className="box-signup">or <Link to="/">Sign up</Link></div>
+                <div className="box-signup">or <Link to="/sign-up">Sign up</Link></div>
             </Row>
         </div>
     )

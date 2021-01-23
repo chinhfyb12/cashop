@@ -24,7 +24,7 @@ const Product = (props) => {
                     <HeartTwoTone twoToneColor="#098777"/>
                 </Button>
             </div>
-            <Link to='/'>
+            <Link to='/collections/detail'>
                 <Card
                     hoverable
                     cover={<img alt='' src={props.imgUrl} />}

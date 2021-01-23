@@ -1,7 +1,7 @@
 import { Breadcrumb, Col, Divider, Row, Select, Typography } from 'antd';
 import React from 'react'
 import { Link } from 'react-router-dom';
-import Products from '../../components/products/Products.component';
+import Products from '../../components/products/Products';
 import './Products.css';
 
 const ProductsPage = () => {

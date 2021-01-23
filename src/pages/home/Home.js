@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import './Home.css'
 import blackpink from '../../images/blackpink.jpg';
 import book from '../../images/book.jpg'
-import Products from '../../components/productsSlider/ProductsSlider.component'
+import Products from '../../components/productsSlider/ProductsSlider'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -13,29 +13,29 @@ const Home = () => {
 
     const suggestCategories = [
         {
+            path: '/collections/k-pop/girl-group/black-pink',
             nameCategory: 'Black Pink',
             img: blackpink
         },
         {
+            path: '/collections/k-drama/categories/book',
             nameCategory: 'Book',
             img: book
         }
     ]
     const renderSuggestCategories = () => {
-        return suggestCategories.map(category => {
+        return suggestCategories.map((category, index) => {
             return (
-                <>
-                    <Col lg={{span: 12}} md={{span: 12}} xs={{span: 12}} className="gutter-row">
-                        <Link to='/'>
-                            <Card
-                                hoverable
-                                cover={<img alt='' src={category.img} />}
-                            >
-                                <Meta title={category.nameCategory}/>
-                            </Card>
-                        </Link>
+                <Col key={index} lg={{span: 12}} md={{span: 12}} xs={{span: 12}} className="gutter-row">
+                    <Link to={category.path}>
+                        <Card
+                            hoverable
+                            cover={<img alt='' src={category.img} />}
+                        >
+                            <Meta title={category.nameCategory}/>
+                        </Card>
+                    </Link>
                     </Col>
-                </>
             )
         })
     }
@@ -81,7 +81,7 @@ const Home = () => {
                         <Typography className='title'>Shop For</Typography>
                     </Col>
                     <Col span={12} className="col-link">
-                        <Link className="categories-link" to='/'>{`More categories >`}</Link>
+                        <Link className="categories-link" to='/collections'>{`More categories >`}</Link>
                     </Col>
                 </Row>
                 <Row gutter={32}>
@@ -96,7 +96,7 @@ const Home = () => {
                             <Typography className='title'>K-Fashion</Typography>
                         </Col>
                         <Col span={12} className="col-link">
-                            <Link className="categories-link" to='/'>{`More k-fashion >`}</Link>
+                            <Link className="categories-link" to='/collections/k-fashion'>{`More k-fashion >`}</Link>
                         </Col>
                     </Row>
                     <Row gutter={16}>
@@ -112,7 +112,7 @@ const Home = () => {
                             <Typography className='title'>K-Pop</Typography>
                         </Col>
                         <Col span={12} className="col-link">
-                            <Link className="categories-link" to='/'>{`More k-pop >`}</Link>
+                            <Link className="categories-link" to='/collections/k-pop'>{`More k-pop >`}</Link>
                         </Col>
                     </Row>
                     <Row gutter={16}>
@@ -128,7 +128,7 @@ const Home = () => {
                             <Typography className='title'>K-Beauty</Typography>
                         </Col>
                         <Col span={12} className="col-link">
-                            <Link className="categories-link" to='/'>{`More k-beauty >`}</Link>
+                            <Link className="categories-link" to='/collections/k-beauty'>{`More k-beauty >`}</Link>
                         </Col>
                     </Row>
                     <Row gutter={16}>

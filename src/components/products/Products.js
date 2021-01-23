@@ -1,6 +1,6 @@
 import { Col } from 'antd';
 import React from 'react'
-import Product from '../product/Product.component';
+import Product from '../product/Product';
 
 const Products = (props) => {
 
