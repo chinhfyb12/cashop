@@ -1,19 +1,23 @@
 import { DeleteOutlined } from '@ant-design/icons'
 import { Button, Divider, List, Typography } from 'antd'
+import { useSelector, useDispatch } from 'react-redux'
 import Modal from 'antd/lib/modal/Modal'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Link } from 'react-router-dom'
+import { showCartModal } from '../../store/actions'
 import './Cart.css'
-import { useSelector } from 'react-redux'
 
 const Cart = () => {
-
+    const dispatch = useDispatch();
     // const titleEmpty = 'Your cart is currently empty.';
-    const isShowCartModel = useSelector(state => state.showCartModel)
-
+    const isShowCartModal = useSelector(state => state.showCartModal)
+    const onShowModalCard = useCallback(() => {
+        dispatch(showCartModal());
+    },[dispatch]);
+    
     return (
         <div className="box-cart">
-            <Modal title="Shopping Cart" visible={isShowCartModel}>
+            <Modal title="Shopping Cart" visible={isShowCartModal} onCancel={onShowModalCard}>
                 <List>
                     <List.Item className="box-product">
                         <div className="box">

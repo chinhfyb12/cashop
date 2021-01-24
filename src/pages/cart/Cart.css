@@ -161,6 +161,7 @@
   }
   .ant-modal .ant-modal-body .box-product .box {
     margin-bottom: 10px;
+    width: 100% !important;
   }
 }
 /*# sourceMappingURL=Cart.css.map */

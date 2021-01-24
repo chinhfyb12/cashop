@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Product from '../product/Product'
 import Slider from "react-slick";
 
-const Products = (props) => {
+const ProductsSlider = (props) => {
 
     const [slides, setSlides] = useState(4);
 
@@ -40,7 +40,7 @@ const Products = (props) => {
             })
             setProducts(temp)
         }
-    }, [])
+    }, [props.children])
     return (
         <Slider {...settings}>
             {
@@ -50,4 +50,4 @@ const Products = (props) => {
     )
 }
 
-export default Products;
+export default ProductsSlider;

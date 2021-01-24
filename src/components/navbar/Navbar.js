@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Col, Dropdown, Menu, Row, Divider, Badge, Button, Affix } from 'antd';
 import { Link } from 'react-router-dom';
 import { DownOutlined, MenuUnfoldOutlined, ShoppingOutlined, UserOutlined, SearchOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import './Navbar.css';
-import Slug from '../../Slug'
+import Slug from '../../common/Slug'
+import { showCartModal, showSearch } from '../../store/actions'
+import { useDispatch } from 'react-redux'
 
 //navbar desktop
 
@@ -369,6 +371,8 @@ const lifeMenuM = (
 
 const Navbar = () => {
 
+    const dispatch = useDispatch();
+
     const [visibleB, setVisibleB] = useState(false);
     const [visibleP, setVisibleP] = useState(false);
     const [visibleD, setVisibleD] = useState(false);
@@ -431,6 +435,14 @@ const Navbar = () => {
     //
     const [isMenuShow, setMenuShow] = useState(false);
 
+    const onShowModalCard = useCallback(() => {
+        dispatch(showCartModal());
+    },[dispatch]);
+
+    const onShowSearch = useCallback(() => {
+        dispatch(showSearch());
+    }, [dispatch])
+
     return (
         <Affix offsetTop={0}>
             <div className="navbar_root">
@@ -469,13 +481,13 @@ const Navbar = () => {
                             </Col>
                             <Col span={12} className="tools_user">
                                 <div className="box-tool">
-                                    <Button>
+                                    <Button onClick={onShowSearch}>
                                         <SearchOutlined />
                                     </Button>
                                 </div>
                                 <div className="box-tool" style={{margin: '0 15px'}}>
                                     <Badge count={1}>
-                                        <Button>
+                                        <Button onClick={onShowModalCard}>
                                             <ShoppingOutlined />
                                         </Button>
                                     </Badge>

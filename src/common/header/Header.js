@@ -1,16 +1,20 @@
 import { ShoppingOutlined } from '@ant-design/icons';
 import { Badge, Button, Col, Input, Row, Typography } from 'antd';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../../components/navbar/Navbar';
 import logo from '../../images/3903482.jpg';
 import './Header.css';
 import { useDispatch } from 'react-redux'
-import { showCartModel } from '../../store/actions'
+import { showCartModal } from '../../store/actions'
 
 const Header = () => {
 
     const dispatch = useDispatch();
+
+    const onShowModalCard = useCallback(() => {
+        dispatch(showCartModal());
+    },[dispatch]);
 
     return (
         <div className="container-fluid header">
@@ -32,7 +36,7 @@ const Header = () => {
                         </div>
                         <div className="tool">
                             <Badge count={1}>
-                                <Button onClick={ () => dispatch(showCartModel) }>
+                                <Button onClick={onShowModalCard}>
                                     <Typography>
                                         CART
                                     </Typography>

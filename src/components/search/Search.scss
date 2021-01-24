@@ -1,0 +1,17 @@
+.box-search {
+    width: 760px !important;
+}
+.modal-search {
+    form {
+        .ant-input-group {
+            display: flex;
+        }
+    }
+    .ant-list {
+        &-item {
+            a {
+                width: 100%;
+            }
+        }
+    }
+}

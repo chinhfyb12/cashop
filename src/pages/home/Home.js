@@ -1,15 +1,32 @@
-import { Card, Col, Divider, Row, Typography } from 'antd'
+import {Card, Col, Divider, Row, Typography } from 'antd'
 import Meta from 'antd/lib/card/Meta'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './Home.css'
 import blackpink from '../../images/blackpink.jpg';
 import book from '../../images/book.jpg'
-import Products from '../../components/productsSlider/ProductsSlider'
+import ProductsSlider from '../../components/productsSlider/ProductsSlider'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import axios from 'axios';
 
 const Home = () => {
+
+    const [productsFashion, setProductsFashion] = useState([{
+        nameProduct: '',
+        price: 0,
+        imgUrl: ''
+    }])
+    const [productsPop, setProductsPop] = useState([{
+        nameProduct: '',
+        price: 0,
+        imgUrl: ''
+    }])
+    const [productsBeauty, setProductsBeauty] = useState([{
+        nameProduct: '',
+        price: 0,
+        imgUrl: ''
+    }])
 
     const suggestCategories = [
         {
@@ -35,43 +52,48 @@ const Home = () => {
                             <Meta title={category.nameCategory}/>
                         </Card>
                     </Link>
-                    </Col>
+                </Col>
             )
         })
     }
 
-    let products = [
-        {
-            nameProduct: 'San pham 1',
-            price: 300000,
-            imgUrl: 'https://cdn.shopify.com/s/files/1/0283/0824/2504/products/CASPERGRAPHICSWEATSHIRTJA_BLUEGREEN_1_360x.jpg?v=1611297535'
-        },
-        {
-            nameProduct: 'San pham 2',
-            price: 300000,
-            imgUrl: 'https://cdn.shopify.com/s/files/1/0283/0824/2504/products/CASPERGRAPHICSWEATSHIRTJA_BLUEGREEN_1_360x.jpg?v=1611297535'
-        },
-        {
-            nameProduct: 'San pham 3',
-            price: 300000,
-            imgUrl: 'https://cdn.shopify.com/s/files/1/0283/0824/2504/products/CASPERGRAPHICSWEATSHIRTJA_BLUEGREEN_1_360x.jpg?v=1611297535'
-        },
-        {
-            nameProduct: 'San pham 4',
-            price: 300000,
-            imgUrl: 'https://cdn.shopify.com/s/files/1/0283/0824/2504/products/CASPERGRAPHICSWEATSHIRTJA_BLUEGREEN_1_360x.jpg?v=1611297535'
-        },
-        {
-            nameProduct: 'San pham 5',
-            price: 300000,
-            imgUrl: 'https://cdn.shopify.com/s/files/1/0283/0824/2504/products/CASPERGRAPHICSWEATSHIRTJA_BLUEGREEN_1_360x.jpg?v=1611297535'
-        },
-        {
-            nameProduct: 'San pham 6',
-            price: 300000,
-            imgUrl: 'https://cdn.shopify.com/s/files/1/0283/0824/2504/products/CASPERGRAPHICSWEATSHIRTJA_BLUEGREEN_1_360x.jpg?v=1611297535'
-        }
-    ]
+    useEffect(() => {
+        axios.get('http://localhost:5000/api/collections/get?category1=k-beauty')
+            .then(res => {
+                const tempProducts = res.data.map(product => {
+                    return {
+                        nameProduct: product.nameProduct,
+                        price: product.price,
+                        imgUrl: product.imgUrlList[0]
+                    }
+                })
+                setProductsBeauty(tempProducts)
+            })
+
+        axios.get('http://localhost:5000/api/collections/get?category1=k-fashion')
+            .then(res => {
+                const tempProducts = res.data.map(product => {
+                    return {
+                        nameProduct: product.nameProduct,
+                        price: product.price,
+                        imgUrl: product.imgUrlList[0]
+                    }
+                })
+                setProductsFashion(tempProducts)
+            })
+
+        axios.get('http://localhost:5000/api/collections/get?category1=k-pop')
+            .then(res => {
+                const tempProducts = res.data.map(product => {
+                    return {
+                        nameProduct: product.nameProduct,
+                        price: product.price,
+                        imgUrl: product.imgUrlList[0]
+                    }
+                })
+                setProductsPop(tempProducts)
+            })
+    }, [])
 
     return (
         <div className="container home">
@@ -100,9 +122,9 @@ const Home = () => {
                         </Col>
                     </Row>
                     <Row gutter={16}>
-                        <Products>
-                            { products }
-                        </Products>
+                        <ProductsSlider>
+                            { productsFashion }
+                        </ProductsSlider>
                     </Row>
                 </div>
                 <Divider />
@@ -116,9 +138,9 @@ const Home = () => {
                         </Col>
                     </Row>
                     <Row gutter={16}>
-                        <Products>
-                            { products }
-                        </Products>
+                        <ProductsSlider>
+                            { productsPop }
+                        </ProductsSlider>
                     </Row>
                 </div>
                 <Divider />
@@ -132,9 +154,9 @@ const Home = () => {
                         </Col>
                     </Row>
                     <Row gutter={16}>
-                        <Products>
-                            { products }
-                        </Products>
+                        <ProductsSlider>
+                            { productsBeauty }
+                        </ProductsSlider>
                     </Row>
                 </div>
             </div>

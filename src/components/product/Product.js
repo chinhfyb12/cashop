@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import './Product.css'
 import { HeartTwoTone  } from '@ant-design/icons';
+import formatMoney from '../../common/formatMoney'
 
 const Product = (props) => {
 
@@ -30,7 +31,7 @@ const Product = (props) => {
                     cover={<img alt='' src={props.imgUrl} />}
                 >
                     <Meta title={props.nameProduct}/>
-                    <Typography.Title level={3}> {props.price} vnd</Typography.Title>
+                    <Typography.Title level={3}> {formatMoney(props.price)} vnd</Typography.Title>
                 </Card>
             </Link>
         </div>

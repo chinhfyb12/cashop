@@ -1,11 +1,13 @@
-import showCartModel from '../reducers/showCartReducer'
+import thunk from 'redux-thunk'
+import { createStore, applyMiddleware, combineReducers } from 'redux'
+import showCartModal from '../reducers/showCartReducer'
+import showSearch from '../reducers/showSearchReducer'
 
-const redux = require('redux')
-
-const rootReducer = redux.combineReducers({
-    showCartModel,
+const rootReducer = combineReducers({
+    showCartModal,
+    showSearch
 });
 
-const store = redux.createStore(rootReducer)
+const store = createStore(rootReducer, applyMiddleware(thunk))
 
 export default store;
