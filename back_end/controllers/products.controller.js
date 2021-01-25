@@ -10,16 +10,25 @@ class ProductsController {
                         { categories: queriesObj.category1 },
                         { categories: queriesObj.category2 }
                     ]
-                }, (err, products) => {
-                    if(!err) res.json(products)
                 })
+                .limit(parseInt(queriesObj.limit))
+                .then(products => res.json(products))
             } else {
                 ProductsModel.find({
                     categories: queriesObj.category1
-                }, (err, products) => {
-                    if(!err) res.json(products)
                 })
+                .limit(parseInt(queriesObj.limit))
+                .then(products => res.json(products))
             }
+        } catch (err) {
+            res.status(500).json('Error: ', err)
+        }
+    }
+    async getProduct(req, res) {
+        try {
+            const queriesObj = { ...req.query }
+            ProductsModel.find({ _id: queriesObj.id})
+                        .then(product => res.json(product))
         } catch (err) {
             res.status(500).json('Error: ', err)
         }

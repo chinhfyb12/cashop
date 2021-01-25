@@ -34,6 +34,10 @@ const ProductsSlider = (props) => {
                             nameProduct={product.nameProduct}
                             price={product.price}
                             imgUrl={product.imgUrl}
+                            productId={product._id}
+                            category1={product.categories[0]}
+                            category2={product.categories[1]}
+                            category3={product.categories[2]}
                         />
                     </Col>
                 )

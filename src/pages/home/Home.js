@@ -8,24 +8,27 @@ import book from '../../images/book.jpg'
 import ProductsSlider from '../../components/productsSlider/ProductsSlider'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import axios from 'axios';
+import ProductsAPI from '../../common/api/productsAPI';
 
 const Home = () => {
 
     const [productsFashion, setProductsFashion] = useState([{
         nameProduct: '',
         price: 0,
-        imgUrl: ''
+        imgUrl: '',
+        categories: []
     }])
     const [productsPop, setProductsPop] = useState([{
         nameProduct: '',
         price: 0,
-        imgUrl: ''
+        imgUrl: '',
+        categories: []
     }])
     const [productsBeauty, setProductsBeauty] = useState([{
         nameProduct: '',
         price: 0,
-        imgUrl: ''
+        imgUrl: '',
+        categories: []
     }])
 
     const suggestCategories = [
@@ -57,42 +60,39 @@ const Home = () => {
         })
     }
 
+    const getProducts = async (category1, category2, limit) => {
+        const productsMongo = await ProductsAPI(category1, category2, limit)
+        return productsMongo;
+    }
+
     useEffect(() => {
-        axios.get('http://localhost:5000/api/collections/get?category1=k-beauty')
-            .then(res => {
-                const tempProducts = res.data.map(product => {
-                    return {
-                        nameProduct: product.nameProduct,
-                        price: product.price,
-                        imgUrl: product.imgUrlList[0]
-                    }
-                })
-                setProductsBeauty(tempProducts)
+        getProducts('k-beauty', null, 8).then(res => {
+            const tempProducts = res.map(product => {
+                return {
+                    ...product,
+                    imgUrl: product.imgUrlList[0]
+                }
             })
-
-        axios.get('http://localhost:5000/api/collections/get?category1=k-fashion')
-            .then(res => {
-                const tempProducts = res.data.map(product => {
-                    return {
-                        nameProduct: product.nameProduct,
-                        price: product.price,
-                        imgUrl: product.imgUrlList[0]
-                    }
-                })
-                setProductsFashion(tempProducts)
+            setProductsBeauty(tempProducts)
+        })
+        getProducts('k-fashion', null, 8).then(res => {
+            const tempProducts = res.map(product => {
+                return {
+                    ...product,
+                    imgUrl: product.imgUrlList[0]
+                }
             })
-
-        axios.get('http://localhost:5000/api/collections/get?category1=k-pop')
-            .then(res => {
-                const tempProducts = res.data.map(product => {
-                    return {
-                        nameProduct: product.nameProduct,
-                        price: product.price,
-                        imgUrl: product.imgUrlList[0]
-                    }
-                })
-                setProductsPop(tempProducts)
+            setProductsFashion(tempProducts)
+        })
+        getProducts('k-pop', null, 8).then(res => {
+            const tempProducts = res.map(product => {
+                return {
+                    ...product,
+                    imgUrl: product.imgUrlList[0]
+                }
             })
+            setProductsPop(tempProducts)
+        })
     }, [])
 
     return (

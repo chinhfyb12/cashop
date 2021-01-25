@@ -1,60 +1,56 @@
-import { Breadcrumb, Col, Divider, Row, Select, Typography } from 'antd';
-import React from 'react'
-import { Link } from 'react-router-dom';
+import { Col, Divider, Row, Select, Typography } from 'antd';
+import React, { useEffect, useState } from 'react'
+import { useRouteMatch } from 'react-router-dom';
 import Products from '../../components/products/Products';
 import './Products.css';
+import ProductsAPI from '../../common/api/productsAPI'
 
 const ProductsPage = () => {
 
-    let products = [
-        {
-            nameProduct: 'San pham 1',
-            price: 300000,
-            imgUrl: 'https://cdn.shopify.com/s/files/1/0283/0824/2504/products/CASPERGRAPHICSWEATSHIRTJA_BLUEGREEN_1_360x.jpg?v=1611297535'
-        },
-        {
-            nameProduct: 'San pham 2',
-            price: 300000,
-            imgUrl: 'https://cdn.shopify.com/s/files/1/0283/0824/2504/products/CASPERGRAPHICSWEATSHIRTJA_BLUEGREEN_1_360x.jpg?v=1611297535'
-        },
-        {
-            nameProduct: 'San pham 3',
-            price: 300000,
-            imgUrl: 'https://cdn.shopify.com/s/files/1/0283/0824/2504/products/CASPERGRAPHICSWEATSHIRTJA_BLUEGREEN_1_360x.jpg?v=1611297535'
-        },
-        {
-            nameProduct: 'San pham 4',
-            price: 300000,
-            imgUrl: 'https://cdn.shopify.com/s/files/1/0283/0824/2504/products/CASPERGRAPHICSWEATSHIRTJA_BLUEGREEN_1_360x.jpg?v=1611297535'
-        },
-        {
-            nameProduct: 'San pham 5',
-            price: 300000,
-            imgUrl: 'https://cdn.shopify.com/s/files/1/0283/0824/2504/products/CASPERGRAPHICSWEATSHIRTJA_BLUEGREEN_1_360x.jpg?v=1611297535'
-        },
-        {
-            nameProduct: 'San pham 6',
-            price: 300000,
-            imgUrl: 'https://cdn.shopify.com/s/files/1/0283/0824/2504/products/CASPERGRAPHICSWEATSHIRTJA_BLUEGREEN_1_360x.jpg?v=1611297535'
+    const { path } = useRouteMatch()
+
+    const getProducts = async (category1, category2, limit) => {
+        const productsMongo = await ProductsAPI(category1, category2, limit)
+        return productsMongo;
+    }
+
+    const [products, setProducts] = useState([]);
+    const [category, setCategory] = useState(null)
+
+    useEffect(() => {
+        if((path.split('/').length - 1) === 2 || path.split('/').length - 1 === 4) {
+            getProducts(path.slice(path.lastIndexOf('/') + 1)).then(res => {
+                const tempProducts = res.map(product => {
+                    return {
+                        ...product,
+                        imgUrl: product.imgUrlList[0]
+                    }
+                })
+                setProducts(tempProducts)
+                setCategory(path.slice(path.lastIndexOf('/') + 1))
+            })
+        } else if((path.split('/').length - 1) === 3) {
+            getProducts(path.slice(path.lastIndexOf('/') + 1), path.slice(path.indexOf('/', 2) + 1,path.lastIndexOf('/'))).then(res => {
+                const tempProducts = res.map(product => {
+                    return {
+                        ...product,
+                        imgUrl: product.imgUrlList[0]
+                    }
+                })
+                setProducts(tempProducts)
+                setCategory(path.slice(path.lastIndexOf('/') + 1))
+            })
         }
-    ]
+    }, [path])
 
     return (
         <div className="container-products">
             <Row className="box-breadcrumb">
-                <Breadcrumb>
-                    <Breadcrumb.Item>
-                        <Link to='/'>home</Link>
-                    </Breadcrumb.Item>
-                    <Breadcrumb.Item>
-                        k-drama
-                    </Breadcrumb.Item>
-                </Breadcrumb>
             </Row>
             <Divider />
             <Row className='row-title'>
                 <Col lg={{span: 12}} md={{span: 12}} xs={{span: 24}}>
-                    <Typography.Title level={2}>k-drama</Typography.Title>
+                    <Typography.Title level={2}>{category}</Typography.Title>
                 </Col>
                 <Col className='sort-tool' lg={{span: 12}} md={{span: 12}} xs={{span: 24}}>
                     <Typography.Text>Sort by</Typography.Text>

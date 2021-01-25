@@ -1,8 +1,13 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Switch, Route } from "react-router-dom";
 import routes from './components/routes/routes';
+import ProductDetail from './pages/productDetail/ProductDetail'
 
 const RouterURL = () => {
+
+    const pathProduct = useSelector(state => state.sendPathProduct)
+
     function showRouterURL(routes) {
         let result = null;
         if(routes) {
@@ -20,6 +25,9 @@ const RouterURL = () => {
     return(
         <Switch>
             { showRouterURL(routes) }
+            <Route path={`${pathProduct}/:slug.:id`} exact={true}>
+                <ProductDetail />
+            </Route>
         </Switch>
     )
 }

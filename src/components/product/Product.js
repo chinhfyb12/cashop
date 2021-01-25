@@ -1,12 +1,21 @@
 import { Button, Card, Typography } from 'antd'
 import Meta from 'antd/lib/card/Meta';
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import './Product.css'
 import { HeartTwoTone  } from '@ant-design/icons';
 import formatMoney from '../../common/formatMoney'
+import Slug from '../../common/Slug'
+import { useDispatch } from 'react-redux';
+import { sendPathProduct } from '../../store/actions'
 
 const Product = (props) => {
+
+    const dispatch = useDispatch();
+
+    const onClickLink = useCallback((path) => {
+        dispatch(sendPathProduct(path))
+    }, [dispatch])
 
     const [isHover, setHover] = useState(false);
     useEffect(() => {
@@ -14,6 +23,7 @@ const Product = (props) => {
             setHover(true)
         }
     }, [])
+
     return (
         <div 
             className="box-product"
@@ -25,7 +35,10 @@ const Product = (props) => {
                     <HeartTwoTone twoToneColor="#098777"/>
                 </Button>
             </div>
-            <Link to='/collections/detail'>
+            <Link 
+                to={`/collections/${props.category1}/${props.category2}/${props.category3}/${Slug(props.nameProduct)}.${props.productId}`}
+                onClick={() => onClickLink(`/collections/${props.category1}/${props.category2}/${props.category3}`)}
+            >
                 <Card
                     hoverable
                     cover={<img alt='' src={props.imgUrl} />}
