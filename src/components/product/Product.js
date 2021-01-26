@@ -1,4 +1,4 @@
-import { Button, Card, Typography } from 'antd'
+import { Button, Card, Spin, Typography } from 'antd'
 import Meta from 'antd/lib/card/Meta';
 import React, { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
@@ -25,29 +25,62 @@ const Product = (props) => {
     }, [])
 
     return (
-        <div 
-            className="box-product"
-            onMouseOver={ () => {if(window.innerWidth > 768) {setHover(true)}}}
-            onMouseOut={ () => {if(window.innerWidth > 768) {setHover(false)}}}
-        >
-            <div className={ isHover ? 'box-icon active' : 'box-icon'}>
-                <Button>
-                    <HeartTwoTone twoToneColor="#098777"/>
-                </Button>
-            </div>
-            <Link 
-                to={`/collections/${props.category1}/${props.category2}/${props.category3}/${Slug(props.nameProduct)}.${props.productId}`}
-                onClick={() => onClickLink(`/collections/${props.category1}/${props.category2}/${props.category3}`)}
-            >
-                <Card
-                    hoverable
-                    cover={<img alt='' src={props.imgUrl} />}
-                >
-                    <Meta title={props.nameProduct}/>
-                    <Typography.Title level={3}> {formatMoney(props.price)} vnd</Typography.Title>
-                </Card>
-            </Link>
-        </div>
+        <>
+            {
+                props.statusLoading ? (
+                    <div>
+                        <Spin size="large"/>
+                    </div>
+                ) : (
+                    <div 
+                        className=  "box-product"
+                        onMouseOver={ () => {if(window.innerWidth > 768) {setHover(true)}}}
+                        onMouseOut={ () => {if(window.innerWidth > 768) {setHover(false)}}}
+                    >
+                        <div className={ isHover ? 'box-icon active' : 'box-icon'}>
+                            <Button>
+                                <HeartTwoTone twoToneColor="#098777"/>
+                            </Button>
+                        </div>
+                        <Link 
+                            to={`/collections/${props.category1}/${props.category2}/${props.category3}/${Slug(props.nameProduct)}.${props.productId}`}
+                            onClick={() => onClickLink(`/collections/${props.category1}/${props.category2}/${props.category3}`)}
+                        >
+                            <Card
+                                hoverable
+                                cover={<img alt='' src={props.imgUrl} />}
+                            >
+                                <Meta title={props.nameProduct}/>
+                                <Typography.Title level={3}> {formatMoney(props.price)} vnd</Typography.Title>
+                            </Card>
+                        </Link>
+                    </div>
+                )
+            }
+        </>
+        // <div 
+        //     className="box-product"
+        //     onMouseOver={ () => {if(window.innerWidth > 768) {setHover(true)}}}
+        //     onMouseOut={ () => {if(window.innerWidth > 768) {setHover(false)}}}
+        // >
+        //     <div className={ isHover ? 'box-icon active' : 'box-icon'}>
+        //         <Button>
+        //             <HeartTwoTone twoToneColor="#098777"/>
+        //         </Button>
+        //     </div>
+        //     <Link 
+        //         to={`/collections/${props.category1}/${props.category2}/${props.category3}/${Slug(props.nameProduct)}.${props.productId}`}
+        //         onClick={() => onClickLink(`/collections/${props.category1}/${props.category2}/${props.category3}`)}
+        //     >
+        //         <Card
+        //             hoverable
+        //             cover={<img alt='' src={props.imgUrl} />}
+        //         >
+        //             <Meta title={props.nameProduct}/>
+        //             <Typography.Title level={3}> {formatMoney(props.price)} vnd</Typography.Title>
+        //         </Card>
+        //     </Link>
+        // </div>
     )
 }
 

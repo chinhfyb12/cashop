@@ -16,6 +16,7 @@ const Products = (props) => {
                         category1={product.categories[0]}
                         category2={product.categories[1]}
                         category3={product.categories[2]}
+                        statusLoading={false}
                     />
                 </Col>
             )

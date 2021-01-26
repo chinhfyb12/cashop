@@ -7,8 +7,9 @@ import Slug from '../../common/Slug'
 import { showCartModal, showSearch } from '../../store/actions'
 import { useDispatch } from 'react-redux'
 
-//navbar desktop
+//set menu
 
+//navbar desktop
 const submenuBeauty = [
     {
         title: 'Face',
@@ -368,6 +369,7 @@ const lifeMenuM = (
         }
     </Menu>
 )
+//end set menu
 
 const Navbar = () => {
 
@@ -507,7 +509,7 @@ const Navbar = () => {
                                     return (
                                         <>
                                             <Menu.Item className='nav-list_item'>
-                                                <Link to={`/collections/${Slug(category.name)}`}>{category.name.toUpperCase()}</Link>
+                                                <Link onClick={ () => setMenuShow(!isMenuShow)} to={`/collections/${Slug(category.name)}`}>{category.name.toUpperCase()}</Link>
                                                 <p>
                                                     <Dropdown 
                                                         overlay={category.submenuM} 

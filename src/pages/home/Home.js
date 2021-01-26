@@ -13,6 +13,7 @@ import Slider from "react-slick";
 
 const Home = () => {
 
+    const [loading, setLoading] = useState(true)
     const [slides, setSlides] = useState(4);
 
     const settings = {
@@ -91,32 +92,48 @@ const Home = () => {
     }
 
     useEffect(() => {
-        getProducts('k-beauty', null, 8).then(res => {
-            const tempProducts = res.map(product => {
-                return {
-                    ...product,
-                    imgUrl: product.imgUrlList[0]
-                }
-            })
-            setProductsBeauty(tempProducts)
-        })
-        getProducts('k-fashion', null, 8).then(res => {
-            const tempProducts = res.map(product => {
-                return {
-                    ...product,
-                    imgUrl: product.imgUrlList[0]
-                }
-            })
-            setProductsFashion(tempProducts)
-        })
-        getProducts('k-pop', null, 8).then(res => {
-            const tempProducts = res.map(product => {
-                return {
-                    ...product,
-                    imgUrl: product.imgUrlList[0]
-                }
-            })
-            setProductsPop(tempProducts)
+
+        if(window.innerWidth >= 769) {
+            setSlides(4)
+        } else if(window.innerWidth >= 577 && window.innerWidth < 769) {
+            setSlides(3)
+        } else if(window.innerWidth < 577){
+            setSlides(2)
+        }
+
+        const t1 = getProducts('k-beauty', null, 8)
+        const t2 = getProducts('k-fashion', null, 8)
+        const t3 = getProducts('k-pop', null, 8)
+
+        Promise.all([t1, t2, t3]).then(res => {
+            if(res[0]) {
+                const tempProductsB = res[0].map(product => {
+                    return {
+                        ...product,
+                        imgUrl: product.imgUrlList[0]
+                    }
+                })
+                setProductsBeauty(tempProductsB)
+            }
+            if(res[1]) {
+                const tempProductsF = res[1].map(product => {
+                    return {
+                        ...product,
+                        imgUrl: product.imgUrlList[0]
+                    }
+                })
+                setProductsFashion(tempProductsF)
+            }
+            if(res[2]) {
+                const tempProductsP = res[2].map(product => {
+                    return {
+                        ...product,
+                        imgUrl: product.imgUrlList[0]
+                    }
+                })
+                setProductsPop(tempProductsP)
+            }
+            setLoading(false)
         })
     }, [])
 
@@ -147,9 +164,11 @@ const Home = () => {
                         </Col>
                     </Row>
                     <Row gutter={16}>
-                        <ProductsSlider>
-                            { productsFashion }
-                        </ProductsSlider>
+                        {
+                            loading ? renderLoading() : <ProductsSlider>
+                                                            { productsFashion }
+                                                        </ProductsSlider>
+                        }
                     </Row>
                 </div>
                 <Divider />
@@ -163,9 +182,12 @@ const Home = () => {
                         </Col>
                     </Row>
                     <Row gutter={16}>
-                        <ProductsSlider>
-                            { productsPop }
-                        </ProductsSlider>
+                        {
+                            loading ? renderLoading() : <ProductsSlider>
+                                                            { productsPop }
+                                                        </ProductsSlider>
+                        }
+                        
                     </Row>
                 </div>
                 <Divider />
@@ -179,12 +201,12 @@ const Home = () => {
                         </Col>
                     </Row>
                     <Row gutter={16}>
-                        {/* <ProductsSlider>
-                            { productsBeauty }
-                        </ProductsSlider> */}
                         {
-                            renderLoading()
+                            loading ? renderLoading() : <ProductsSlider>
+                                                            { productsBeauty }
+                                                        </ProductsSlider>
                         }
+                        
                     </Row>
                 </div>
             </div>

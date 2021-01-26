@@ -7,7 +7,7 @@ import sendPathProduct from '../reducers/sendPathProductReducer'
 const rootReducer = combineReducers({
     showCartModal,
     showSearch,
-    sendPathProduct
+    sendPathProduct,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk))
