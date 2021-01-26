@@ -28,7 +28,23 @@ class ProductsController {
         try {
             const queriesObj = { ...req.query }
             ProductsModel.find({ _id: queriesObj.id})
+                        .limit(4)
                         .then(product => res.json(product))
+        } catch (err) {
+            res.status(500).json('Error: ', err)
+        }
+    }
+    async getProductsRelated (req, res) {
+        try {
+            const queriesObj = { ...req.query }
+            ProductsModel.find({
+                $and: [
+                    { categories: queriesObj.category },
+                    { _id: { $ne: queriesObj.id } }
+                ]
+            })
+            .limit(4)
+            .then(products => res.json(products))
         } catch (err) {
             res.status(500).json('Error: ', err)
         }

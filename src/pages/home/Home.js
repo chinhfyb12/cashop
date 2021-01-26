@@ -1,4 +1,4 @@
-import {Card, Col, Divider, Row, Typography } from 'antd'
+import {Card, Col, Divider, Row, Spin, Typography } from 'antd'
 import Meta from 'antd/lib/card/Meta'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -9,8 +9,19 @@ import ProductsSlider from '../../components/productsSlider/ProductsSlider'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ProductsAPI from '../../common/api/productsAPI';
+import Slider from "react-slick";
 
 const Home = () => {
+
+    const [slides, setSlides] = useState(4);
+
+    const settings = {
+        dots: false,
+        infinite: false,
+        speed: 500,
+        slidesToShow: slides,
+        slidesToScroll: 1
+    };
 
     const [productsFashion, setProductsFashion] = useState([{
         nameProduct: '',
@@ -58,6 +69,20 @@ const Home = () => {
                 </Col>
             )
         })
+    }
+
+    const renderLoading = () => {
+        return (
+            <Slider {...settings}>
+                {
+                    [1, 2, 3, 4].map(temp => {
+                        return (
+                            <Spin key={temp} size="large"/>
+                        )
+                    })
+                }
+            </Slider>
+        )
     }
 
     const getProducts = async (category1, category2, limit) => {
@@ -154,9 +179,12 @@ const Home = () => {
                         </Col>
                     </Row>
                     <Row gutter={16}>
-                        <ProductsSlider>
+                        {/* <ProductsSlider>
                             { productsBeauty }
-                        </ProductsSlider>
+                        </ProductsSlider> */}
+                        {
+                            renderLoading()
+                        }
                     </Row>
                 </div>
             </div>

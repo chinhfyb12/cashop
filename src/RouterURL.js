@@ -25,7 +25,7 @@ const RouterURL = () => {
     return(
         <Switch>
             { showRouterURL(routes) }
-            <Route path={`${pathProduct}/:slug.:id`} exact={true}>
+            <Route path={pathProduct === null ? `${window.location.pathname}` : `${pathProduct}/:slug.:id`} exact={true}>
                 <ProductDetail />
             </Route>
         </Switch>

@@ -1,79 +1,69 @@
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import { Card, Col, Row, List, Divider, Typography, Select, Button } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useRouteMatch } from 'react-router-dom';
 import Products from '../../components/products/Products';
 import './ProductDetail.css'
 import axios from 'axios'
 import formatMoney from '../../common/formatMoney'
-import ProductsAPI from '../../common/api/productsAPI'
 
 const ProductDetail = () => {
 
-    const param = useParams();
+    const match = useRouteMatch();
+
+    let idProduct; //id product
+    if(match.params.id === undefined) {
+        idProduct = match.path.slice(match.path.lastIndexOf('.') + 1);
+    } else {
+        idProduct = match.params.id
+    }
 
     const [product, setProduct] = useState({
         nameProduct: '',
         price: '',
         colors: [],
         size: [],
-
+        categories: []
     })
     const [listImgUrl, setListImgUrl] = useState([])
     const [avtUrl, setAvtUrl] = useState(null);
-    const [productsRelated, setProductsRelated] = useState([])
-
-    const getProductsRelated = async (category1, category2, limit) => {
-        const productsMongo = await ProductsAPI(category1, category2, limit)
-        return productsMongo;
-    }
+    const [productsRelated, setProductsRelated] = useState([
+        {
+            nameProduct: '',
+            price: '',
+            imgUrl: '',
+            categories: []
+        }
+    ])
+    const [category, setCategory] = useState(null)
 
     useEffect(() => {
         //get product detail
-        axios.get(`http://localhost:5000/api/collections/product?id=${param.id}`)
+        axios.get(`http://localhost:5000/api/collections/product?id=${idProduct}`)
             .then(res => {
                 setProduct(res.data[0])
                 setListImgUrl(res.data[0].imgUrlList)
                 setAvtUrl(res.data[0].imgUrlList[0])
+                setCategory(res.data[0].categories[2])
 
                 //get products related
-                getProductsRelated(res.data[0].categories[2]).then(res => {
-                    const tempProducts = res.map(product => {
-                        return {
-                            ...product,
-                            imgUrl: product.imgUrlList[0]
-                        }
-                    })
-                    setProductsRelated(tempProducts)
-                })
+                axios.get(`http://localhost:5000/api/collections/productsrelated?category=${res.data[0].categories[2]}&id=${idProduct}`)
+                        .then(res => {
+                            const tempProducts = res.data.map(product => {
+                                return {
+                                    ...product,
+                                    imgUrl: product.imgUrlList[0]
+                                }
+                            })
+                            setProductsRelated(tempProducts);
+
+                            window.scrollTo({
+                                top: 0,
+                                behavior: 'smooth'
+                            });
+                        })
             })
-    }, [param.id])
-    // let products = [
-    //     {
-    //         nameProduct: 'San pham 1',
-    //         price: 300000,
-    //         imgUrl: 'https://cdn.shopify.com/s/files/1/0283/0824/2504/products/CASPERGRAPHICSWEATSHIRTJA_BLUEGREEN_1_360x.jpg?v=1611297535',
-    //         categories: [1, 2, 3]
-    //     },
-    //     {
-    //         nameProduct: 'San pham 2',
-    //         price: 300000,
-    //         imgUrl: 'https://cdn.shopify.com/s/files/1/0283/0824/2504/products/CASPERGRAPHICSWEATSHIRTJA_BLUEGREEN_1_360x.jpg?v=1611297535',
-    //         categories: [1, 2, 3]
-    //     },
-    //     {
-    //         nameProduct: 'San pham 3',
-    //         price: 300000,
-    //         imgUrl: 'https://cdn.shopify.com/s/files/1/0283/0824/2504/products/CASPERGRAPHICSWEATSHIRTJA_BLUEGREEN_1_360x.jpg?v=1611297535',
-    //         categories: [1, 2, 3]
-    //     },
-    //     {
-    //         nameProduct: 'San pham 4',
-    //         price: 300000,
-    //         imgUrl: 'https://cdn.shopify.com/s/files/1/0283/0824/2504/products/CASPERGRAPHICSWEATSHIRTJA_BLUEGREEN_1_360x.jpg?v=1611297535',
-    //         categories: [1, 2, 3]
-    //     },
-    // ]
+    }, [idProduct])
 
     return (
         <div className="box-product-detail">
@@ -141,19 +131,19 @@ const ProductDetail = () => {
                 </Col>
             </Row>
             <Divider />
-            <Row className="box-realated-products">
+            <div className="box-realated-products">
                 <Row className="box-title">
                     <Typography.Title>Related products</Typography.Title>
                 </Row>
                 <Row className="box-link">
-                    <Link to='/'>{`More K-drama >`}</Link>
+                    <Link to={`/collections/${product.categories[0]}/${product.categories[1]}/${product.categories[2]}`}>{`More ${category} >`}</Link>
                 </Row>
                 <Row gutter={16}>
                     <Products>
                         { productsRelated }
                     </Products>
                 </Row>
-            </Row>
+            </div>
         </div>
     )
 }
