@@ -1,8 +1,32 @@
 import { Col } from 'antd';
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+import { sendProductsInCart } from '../../store/actions'
 import Product from '../product/Product';
 
 const Products = (props) => {
+
+    const cartLocalStorage = useSelector(state => state.productsInCart);
+    const dispatch = useDispatch()
+
+    const onAddToCart = product => {
+        if(cartLocalStorage[0]) {
+            let index = cartLocalStorage.findIndex(item => item.productId === product.productId)
+            if(index >= 0) {
+                cartLocalStorage[index] = {
+                    ...cartLocalStorage[index],
+                    quantity: cartLocalStorage[index].quantity + 1
+                }
+            } else {
+                cartLocalStorage.push(product)
+            }
+        } 
+        if(!cartLocalStorage[0]) {
+            cartLocalStorage.push(product)
+        }
+        localStorage.setItem('cart', JSON.stringify(cartLocalStorage))
+        dispatch(sendProductsInCart(cartLocalStorage))
+    }
 
     if(props.children) {
         return props.children.map((product, index) => {
@@ -16,7 +40,9 @@ const Products = (props) => {
                         category1={product.categories[0]}
                         category2={product.categories[1]}
                         category3={product.categories[2]}
+                        color={product.colors[0]}
                         statusLoading={false}
+                        getProductId={onAddToCart}
                     />
                 </Col>
             )

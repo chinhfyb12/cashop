@@ -19,10 +19,18 @@ const Product = (props) => {
 
     const [isHover, setHover] = useState(false);
     useEffect(() => {
+
         if(window.innerWidth <= 768) {
             setHover(true)
         }
     }, [])
+
+    const handleClickAddCart = () => {
+        props.getProductId({
+            ...props,
+            quantity: 1
+        })
+    }
 
     return (
         <>
@@ -38,7 +46,7 @@ const Product = (props) => {
                         onMouseOut={ () => {if(window.innerWidth > 768) {setHover(false)}}}
                     >
                         <div className={ isHover ? 'box-icon active' : 'box-icon'}>
-                            <Button>
+                            <Button onClick={() => handleClickAddCart()}>
                                 <HeartTwoTone twoToneColor="#098777"/>
                             </Button>
                         </div>
@@ -58,29 +66,6 @@ const Product = (props) => {
                 )
             }
         </>
-        // <div 
-        //     className="box-product"
-        //     onMouseOver={ () => {if(window.innerWidth > 768) {setHover(true)}}}
-        //     onMouseOut={ () => {if(window.innerWidth > 768) {setHover(false)}}}
-        // >
-        //     <div className={ isHover ? 'box-icon active' : 'box-icon'}>
-        //         <Button>
-        //             <HeartTwoTone twoToneColor="#098777"/>
-        //         </Button>
-        //     </div>
-        //     <Link 
-        //         to={`/collections/${props.category1}/${props.category2}/${props.category3}/${Slug(props.nameProduct)}.${props.productId}`}
-        //         onClick={() => onClickLink(`/collections/${props.category1}/${props.category2}/${props.category3}`)}
-        //     >
-        //         <Card
-        //             hoverable
-        //             cover={<img alt='' src={props.imgUrl} />}
-        //         >
-        //             <Meta title={props.nameProduct}/>
-        //             <Typography.Title level={3}> {formatMoney(props.price)} vnd</Typography.Title>
-        //         </Card>
-        //     </Link>
-        // </div>
     )
 }
 

@@ -14,3 +14,9 @@ export const sendPathProduct = (pathProduct) => {
         pathProduct
     }
 }
+export const sendProductsInCart = cart => {
+    return{
+        type: 'SEND_PRODUCTS_CART',
+        cart
+    }
+}

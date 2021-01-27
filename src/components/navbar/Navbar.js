@@ -1,11 +1,11 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Col, Dropdown, Menu, Row, Divider, Badge, Button, Affix } from 'antd';
 import { Link } from 'react-router-dom';
 import { DownOutlined, MenuUnfoldOutlined, ShoppingOutlined, UserOutlined, SearchOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import './Navbar.css';
 import Slug from '../../common/Slug'
 import { showCartModal, showSearch } from '../../store/actions'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 //set menu
 
@@ -374,6 +374,13 @@ const lifeMenuM = (
 const Navbar = () => {
 
     const dispatch = useDispatch();
+    const [quantity, setQuantity] = useState(0);
+
+    const cart = [...useSelector(state => state.productsInCart)]
+
+    useEffect(() => {
+        setQuantity(cart.length)
+    }, [cart])
 
     const [visibleB, setVisibleB] = useState(false);
     const [visibleP, setVisibleP] = useState(false);
@@ -488,7 +495,7 @@ const Navbar = () => {
                                     </Button>
                                 </div>
                                 <div className="box-tool" style={{margin: '0 15px'}}>
-                                    <Badge count={1}>
+                                    <Badge count={quantity}>
                                         <Button onClick={onShowModalCard}>
                                             <ShoppingOutlined />
                                         </Button>

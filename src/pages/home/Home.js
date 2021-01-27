@@ -93,6 +93,7 @@ const Home = () => {
 
     useEffect(() => {
 
+        //set slides show
         if(window.innerWidth >= 769) {
             setSlides(4)
         } else if(window.innerWidth >= 577 && window.innerWidth < 769) {
@@ -100,7 +101,9 @@ const Home = () => {
         } else if(window.innerWidth < 577){
             setSlides(2)
         }
+        //end set slides show
 
+        //get list products
         const t1 = getProducts('k-beauty', null, 8)
         const t2 = getProducts('k-fashion', null, 8)
         const t3 = getProducts('k-pop', null, 8)
@@ -135,6 +138,7 @@ const Home = () => {
             }
             setLoading(false)
         })
+        //end get list product
     }, [])
 
     return (

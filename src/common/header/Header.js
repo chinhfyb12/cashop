@@ -1,20 +1,38 @@
 import { ShoppingOutlined } from '@ant-design/icons';
 import { Badge, Button, Col, Input, Row, Typography } from 'antd';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../../components/navbar/Navbar';
 import logo from '../../images/3903482.jpg';
 import './Header.css';
-import { useDispatch } from 'react-redux'
-import { showCartModal } from '../../store/actions'
+import { useDispatch, useSelector } from 'react-redux'
+import { showCartModal, sendProductsInCart } from '../../store/actions'
 
 const Header = () => {
 
     const dispatch = useDispatch();
 
+    const [quantity, setQuantity] = useState(0)
+
     const onShowModalCard = useCallback(() => {
         dispatch(showCartModal());
     },[dispatch]);
+
+    const cart = [...useSelector(state => state.productsInCart)]
+
+    useEffect(() => {
+        setQuantity(cart.length)
+    }, [cart])
+    
+    useEffect(() => {
+        //get cart local storage
+        let cartLocalStorage = JSON.parse(localStorage.getItem('cart'));
+        if(cartLocalStorage === null) {
+            cartLocalStorage = []
+        }
+        dispatch(sendProductsInCart(cartLocalStorage))
+        //end get cart
+    }, [])
 
     return (
         <div className="container-fluid header">
@@ -35,7 +53,7 @@ const Header = () => {
                             <Input.Search placeholder='Search product...'/>
                         </div>
                         <div className="tool">
-                            <Badge count={1}>
+                            <Badge count={quantity}>
                                 <Button onClick={onShowModalCard}>
                                     <Typography>
                                         CART

@@ -2,49 +2,125 @@ import { DeleteOutlined } from '@ant-design/icons'
 import { Button, Divider, List, Typography } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
 import Modal from 'antd/lib/modal/Modal'
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { showCartModal } from '../../store/actions'
+import { showCartModal, sendPathProduct, sendProductsInCart } from '../../store/actions'
 import './Cart.css'
+import formatMoney from '../../common/formatMoney'
+import Slug from '../../common/Slug'
 
 const Cart = () => {
     const dispatch = useDispatch();
-    // const titleEmpty = 'Your cart is currently empty.';
+    const titleEmpty = 'Your cart is currently empty.';
     const isShowCartModal = useSelector(state => state.showCartModal)
+    
+    const cart = useSelector(state => state.productsInCart)
+    const [products, setProducts] = useState([])
+
     const onShowModalCard = useCallback(() => {
         dispatch(showCartModal());
     },[dispatch]);
+
+    const onClickLink = useCallback((path) => {
+        dispatch(sendPathProduct(path))
+        onShowModalCard();
+    }, [dispatch])
+
+    const onDecrease = productId => {
+        const index = cart.findIndex(item => item.productId === productId)
+        if(cart[index].quantity > 1) {
+            cart[index] = {
+                ...cart[index],
+                quantity: cart[index].quantity - 1
+            }
+        }
+        localStorage.setItem('cart', JSON.stringify(cart))
+        dispatch(sendProductsInCart(cart))
+    }
+    const onAddMore = productId => {
+        const index = cart.findIndex(item => item.productId === productId)
+        cart[index] = {
+            ...cart[index],
+            quantity: cart[index].quantity + 1
+        }
+        localStorage.setItem('cart', JSON.stringify(cart))
+        dispatch(sendProductsInCart(cart))
+    }
+
+    const onDeleteProduct = productId => {
+        const index = cart.findIndex(item => item.productId === productId)
+        cart.splice(index, 1)
+        localStorage.setItem('cart', JSON.stringify(cart))
+        dispatch(sendProductsInCart(cart))
+    }
+
+
+    useEffect(() => {
+        setProducts([...cart]);
+    }, [cart])
+
+    const renderProducts = (products) => {
+        return products.map((product, index) => {
+            return (
+                <List.Item key={index} className='box-product'>
+                    <div className="box">
+                        <Link 
+                            to={`/collections/${product.category1}/${product.category2}/${product.category3}/${Slug(product.nameProduct)}.${product.productId}`} 
+                            className="img-link"
+                            onClick={() => onClickLink(`/collections/${product.category1}/${product.category2}/${product.category3}`)}
+                        >
+                            <img style={{width: '100%'}} alt='' src={product.imgUrl}/>
+                        </Link>
+                        <div className="box-name">
+                            <Link 
+                                to={`/collections/${product.category1}/${product.category2}/${product.category3}/${Slug(product.nameProduct)}.${product.productId}`} 
+                                className="product-link"
+                                onClick={() => onClickLink(`/collections/${product.category1}/${product.category2}/${product.category3}`)}
+                            >
+                                {product.nameProduct}
+                            </Link>
+                            <Typography.Text>
+                                {
+                                    product.color ? product.color : ''
+                                }
+                            </Typography.Text>
+                        </div>
+                    </div>
+                    <div className="box">
+                        <div className="box-quantity active">
+                            <div className="btn-add" onClick={() => onDecrease(product.productId)}>-</div>
+                            <span>{product.quantity}</span>
+                            <div className="btn-add" onClick={() => onAddMore(product.productId)}>+</div>
+                        </div>
+                        <Typography.Text className="price">{formatMoney(product.price)} vnd</Typography.Text>
+                        <Button onClick={() => onDeleteProduct(product.productId)}>
+                            <DeleteOutlined />
+                        </Button>
+                    </div>
+                </List.Item>
+            )
+        })
+    }
     
     return (
         <div className="box-cart">
             <Modal title="Shopping Cart" visible={isShowCartModal} onCancel={onShowModalCard}>
                 <List>
-                    <List.Item className="box-product">
-                        <div className="box">
-                            <Link to='/' className="img-link">
-                                <img style={{width: '100%'}} alt='' src="https://cdn.shopify.com/s/files/1/0283/0824/2504/products/9_f32db649-a624-48e7-a42c-cc4f738b4588_540x.jpg?v=1598027605"/>
-                            </Link>
-                            <div className="box-name">
-                                <Link to='' className="product-link">[SKINFOOD] Buttery Cheek Cake</Link>
-                                <Typography.Text>01.Berry & Cream</Typography.Text>
-                            </div>
-                        </div>
-                        <div className="box">
-                            <div className="box-quantity active">
-                                <div className="btn-add">-</div>
-                                <span>1</span>
-                                <div className="btn-add">+</div>
-                            </div>
-                            <Typography.Text className="price">600.000 vnd</Typography.Text>
-                            <Button>
-                                <DeleteOutlined />
-                            </Button>
-                        </div>
-                    </List.Item>
+                    {
+                        products.length > 0 ? renderProducts(products)
+                                            :
+                                            <List.Item className="box-product">
+                                                { titleEmpty }
+                                            </List.Item>
+                    }
                     <Divider />
                 </List>
                 <div className="box-checkout">
-                    <div className="total">Subtotal <span>600.000</span>vnd</div>
+                    <div className="total">Subtotal <span>
+                        {
+                            formatMoney(products.reduce((acc, current) => acc + current.price * current.quantity, 0))
+                        }
+                    </span>vnd</div>
                     <Button>
                         CHECKOUT
                     </Button>
