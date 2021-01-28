@@ -1,4 +1,4 @@
-import { Col, Divider, Row, Select, Spin, Typography } from 'antd';
+import { Col, Divider, Pagination, Row, Select, Spin, Typography } from 'antd';
 import React, { useEffect, useState } from 'react'
 import { useRouteMatch } from 'react-router-dom';
 import Products from '../../components/products/Products';
@@ -10,6 +10,8 @@ const ProductsPage = () => {
 
     const { path } = useRouteMatch()
     const [loading, setLoading] = useState(true)
+    const [maxProducts, setMaxProducts] = useState(1)
+    const [page, setPage] = useState(1)
 
     const settings = {
         dots: false,
@@ -27,9 +29,14 @@ const ProductsPage = () => {
         )
     }
 
-    const getProducts = async (category1, category2, limit) => {
-        const productsMongo = await ProductsAPI(category1, category2, limit)
+    const getProducts = async (category1, category2, page, limit) => {
+        const productsMongo = await ProductsAPI(category1, category2, page, limit)
         return productsMongo;
+    }
+
+    const onChangePage = (page, pageSize) => {
+        setPage(page)
+        setLoading(true)
     }
 
     const [products, setProducts] = useState([
@@ -44,8 +51,8 @@ const ProductsPage = () => {
 
     useEffect(() => {
         if((path.split('/').length - 1) === 2 || path.split('/').length - 1 === 4) {
-            getProducts(path.slice(path.lastIndexOf('/') + 1)).then(res => {
-                const tempProducts = res.map(product => {
+            getProducts(path.slice(path.lastIndexOf('/') + 1), null, page).then(res => {
+                const tempProducts = res.products.map(product => {
                     return {
                         ...product,
                         imgUrl: product.imgUrlList[0]
@@ -54,10 +61,11 @@ const ProductsPage = () => {
                 setProducts(tempProducts)
                 setCategory(path.slice(path.lastIndexOf('/') + 1))
                 setLoading(false)
+                setMaxProducts(res.maxProducts)
             })
         } else if((path.split('/').length - 1) === 3) {
-            getProducts(path.slice(path.lastIndexOf('/') + 1), path.slice(path.indexOf('/', 2) + 1,path.lastIndexOf('/'))).then(res => {
-                const tempProducts = res.map(product => {
+            getProducts(path.slice(path.lastIndexOf('/') + 1), path.slice(path.indexOf('/', 2) + 1,path.lastIndexOf('/')), page).then(res => {
+                const tempProducts = res.products.map(product => {
                     return {
                         ...product,
                         imgUrl: product.imgUrlList[0]
@@ -66,9 +74,10 @@ const ProductsPage = () => {
                 setProducts(tempProducts)
                 setCategory(path.slice(path.lastIndexOf('/') + 1))
                 setLoading(false)
+                setMaxProducts(res.maxProducts)
             })
         }
-    }, [path])
+    }, [path, page])
 
     const renderListProduct = () => {
         return (
@@ -104,6 +113,7 @@ const ProductsPage = () => {
             {
                 loading ? renderLoading() : renderListProduct()
             }
+            <Pagination onChange={(page, pageSize) => onChangePage(page, pageSize)} defaultCurrent={1} total={maxProducts} pageSize={8}/>
         </div>
     )
 }

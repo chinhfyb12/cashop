@@ -86,8 +86,8 @@ const Home = () => {
         )
     }
 
-    const getProducts = async (category1, category2, limit) => {
-        const productsMongo = await ProductsAPI(category1, category2, limit)
+    const getProducts = async (category1, category2, page, limit) => {
+        const productsMongo = await ProductsAPI(category1, category2, null, limit)
         return productsMongo;
     }
 
