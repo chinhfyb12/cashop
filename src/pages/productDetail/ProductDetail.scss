@@ -72,6 +72,22 @@
                         }
                     }
                 }
+                .box-quantity {
+                    display: flex;
+                    justify-content: start;
+                    font-size: 1.1rem;
+                    .action {
+                        margin: 0 10px;
+                        transform: scale(0.8);
+                        transition: .3s;
+                        color: #797979;
+                        cursor: pointer;
+                        &:hover {
+                            transform: scale(1);
+                            color: black;
+                        }
+                    }
+                }
             }
         }
     }

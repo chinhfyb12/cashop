@@ -1,4 +1,4 @@
-import { ShoppingCartOutlined } from '@ant-design/icons';
+import { MinusOutlined, PlusOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { Card, Col, Row, List, Divider, Typography, Select, Button, Spin } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { Link, useRouteMatch } from 'react-router-dom';
@@ -7,6 +7,8 @@ import './ProductDetail.css'
 import axios from 'axios'
 import formatMoney from '../../common/formatMoney'
 import Slider from "react-slick";
+import { useSelector, useDispatch } from 'react-redux';
+import { sendProductsInCart } from '../../store/actions'
 
 const ProductDetail = () => {
 
@@ -14,6 +16,9 @@ const ProductDetail = () => {
     const [loadingProductD, setLoadingProductD] = useState(true)
     const [loadingProductsR, setLoadingProductsR] = useState(true)
     const [slides, setSlides] = useState(4);
+
+    const cartLocalStorage = useSelector(state => state.productsInCart);
+    const dispatch = useDispatch()
 
     const settings = {
         dots: false,
@@ -48,6 +53,8 @@ const ProductDetail = () => {
         }
     ])
     const [category, setCategory] = useState(null)
+    const [quantity, setQuantity] = useState(1)
+    const [color, setColor] = useState(null)
 
     useEffect(() => {
 
@@ -62,6 +69,7 @@ const ProductDetail = () => {
         //get product detail
         axios.get(`http://localhost:5000/api/collections/product?id=${idProduct}`)
             .then(res => {
+                setColor(res.data[0].colors[0])
                 setProduct(res.data[0])
                 setListImgUrl(res.data[0].imgUrlList)
                 setAvtUrl(res.data[0].imgUrlList[0])
@@ -98,6 +106,46 @@ const ProductDetail = () => {
                 }
             </Slider>
         )
+    }
+    const handleAddToCart = product => {
+        let productAddToCart = {
+            category1: product.categories[0],
+            category2: product.categories[1],
+            category3: product.categories[2],
+            color,
+            imgUrl: product.imgUrlList[0],
+            nameProduct: product.nameProduct,
+            price: product.price,
+            productId: product._id,
+            quantity,
+            statusLoading: false
+        }
+        console.log(productAddToCart)
+        if(cartLocalStorage[0]) {
+            let index1 = cartLocalStorage.findIndex(item => item.productId === productAddToCart.productId)
+            let index2 = cartLocalStorage.findIndex(item => item.color === productAddToCart.color)
+            if(index1 >= 0 && index2 >= 0) {
+                cartLocalStorage[index2] = {
+                    ...cartLocalStorage[index2],
+                    quantity: cartLocalStorage[index2].quantity + quantity
+                }
+            } else {
+                cartLocalStorage.push(productAddToCart)
+            }
+        } 
+        if(!cartLocalStorage[0]) {
+            cartLocalStorage.push(productAddToCart)
+        }
+        localStorage.setItem('cart', JSON.stringify(cartLocalStorage))
+        dispatch(sendProductsInCart(cartLocalStorage))
+    }
+    const handleMinusQuantity = () => {
+        if(quantity > 1) {
+            setQuantity(quantity - 1)
+        }
+    }
+    const handlePlusQuantity = () => {
+        setQuantity(quantity + 1)
     }
 
     return (
@@ -144,7 +192,7 @@ const ProductDetail = () => {
                                                     product.colors[0] ? (
                                                         <List.Item className="item-color">
                                                             <Typography.Text>Color</Typography.Text>
-                                                            <Select defaultValue={product.colors[0]} style={{ width: 150 }}>
+                                                            <Select defaultValue={color} style={{ width: 150 }} onChange={ (value) => setColor(value)}>
                                                                 {
                                                                     product.colors.map((color, index) => {
                                                                         return (
@@ -156,8 +204,13 @@ const ProductDetail = () => {
                                                         </List.Item>
                                                     ) : ''
                                                 }
+                                                <List.Item className="box-quantity">
+                                                    <div className="action" onClick={() => handleMinusQuantity()}><MinusOutlined /></div>
+                                                    <span className="quantity">{quantity}</span>
+                                                    <div className="action" onClick={() => handlePlusQuantity()}><PlusOutlined /></div>
+                                                </List.Item>
                                                 <List.Item>
-                                                    <Button>
+                                                    <Button onClick={() => handleAddToCart(product)}>
                                                         <Typography.Title level={4}>ADD TO CART</Typography.Title>
                                                         <ShoppingCartOutlined />
                                                     </Button>

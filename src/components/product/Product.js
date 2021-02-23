@@ -31,7 +31,7 @@ const Product = (props) => {
             quantity: 1
         })
     }
-
+    
     return (
         <>
             {

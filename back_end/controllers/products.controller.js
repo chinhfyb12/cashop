@@ -4,16 +4,23 @@ class ProductsController {
     async getProducts(req, res) {
         try {
             const queriesObj = { ...req.query }
+            // let sort = 'price: 1'
+            // ProductsModel.find().sort({
+                
+            // }).limit(5)
+            //     .then(products => res.json(products))
             if(queriesObj.category2) {
                 if(!queriesObj.page) {
-                    ProductsModel.find({
+                    const products = await ProductsModel.find({
                         $and: [
                             { categories: queriesObj.category1 },
                             { categories: queriesObj.category2 }
                         ]
                     })
                     .limit(parseInt(queriesObj.limit))
-                    .then(products => res.json(products))
+                    .then(products => { return products })
+
+                    res.status(200).json(products)
                 } else {
                     const pageSize = 8;
 
@@ -43,11 +50,13 @@ class ProductsController {
                 }
             } else {
                 if(!queriesObj.page) {
-                    ProductsModel.find({
+                    const products = await ProductsModel.find({
                         categories: queriesObj.category1
                     })
                     .limit(parseInt(queriesObj.limit))
-                    .then(products => res.json(products))
+                    .then(products => { return products })
+                    
+                    res.status(200).json(products)
                 } else {
                     const pageSize = 8;
 
@@ -56,7 +65,13 @@ class ProductsController {
                     })
                     .skip(pageSize*(parseInt(queriesObj.page - 1)))
                     .limit(pageSize)
+                    .sort(parseInt(queriesObj.sort) === 3 ? JSON.parse('{"price": "1"}') : parseInt(queriesObj.sort) === 4 ? JSON.parse('{"price": "-1"}') : parseInt(queriesObj.sort) === 2 ? JSON.parse('{"nameProduct": "-1"}') : parseInt(queriesObj.sort) === 1 ? JSON.parse('{"nameProduct": "1"}') : '')
                     .then(products => { return products })
+
+                    // if(parseInt(queriesObj.sort) === 1) {
+                    //     products.sort({ price: 1 })
+                    //     console.log('bang')
+                    // }
 
                     const maxProducts = await ProductsModel.countDocuments({
                         categories: queriesObj.category1

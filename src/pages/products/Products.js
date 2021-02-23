@@ -12,6 +12,7 @@ const ProductsPage = () => {
     const [loading, setLoading] = useState(true)
     const [maxProducts, setMaxProducts] = useState(1)
     const [page, setPage] = useState(1)
+    const [sortVal, setSortVal] = useState(0)
 
     const settings = {
         dots: false,
@@ -29,8 +30,8 @@ const ProductsPage = () => {
         )
     }
 
-    const getProducts = async (category1, category2, page, limit) => {
-        const productsMongo = await ProductsAPI(category1, category2, page, limit)
+    const getProducts = async (category1, category2, page, limit, sort) => {
+        const productsMongo = await ProductsAPI(category1, category2, page, limit, sort)
         return productsMongo;
     }
 
@@ -51,7 +52,7 @@ const ProductsPage = () => {
 
     useEffect(() => {
         if((path.split('/').length - 1) === 2 || path.split('/').length - 1 === 4) {
-            getProducts(path.slice(path.lastIndexOf('/') + 1), null, page).then(res => {
+            getProducts(path.slice(path.lastIndexOf('/') + 1), null, page, null, sortVal).then(res => {
                 const tempProducts = res.products.map(product => {
                     return {
                         ...product,
@@ -64,7 +65,7 @@ const ProductsPage = () => {
                 setMaxProducts(res.maxProducts)
             })
         } else if((path.split('/').length - 1) === 3) {
-            getProducts(path.slice(path.lastIndexOf('/') + 1), path.slice(path.indexOf('/', 2) + 1,path.lastIndexOf('/')), page).then(res => {
+            getProducts(path.slice(path.lastIndexOf('/') + 1), path.slice(path.indexOf('/', 2) + 1,path.lastIndexOf('/')), page, null, sortVal).then(res => {
                 const tempProducts = res.products.map(product => {
                     return {
                         ...product,
@@ -77,7 +78,12 @@ const ProductsPage = () => {
                 setMaxProducts(res.maxProducts)
             })
         }
-    }, [path, page])
+    }, [path, page, sortVal])
+
+    const handleChangeValueSort = value => {
+        setSortVal(value)
+        setLoading(true)
+    }
 
     const renderListProduct = () => {
         return (
@@ -88,11 +94,12 @@ const ProductsPage = () => {
                     </Col>
                     <Col className='sort-tool' lg={{span: 12}} md={{span: 12}} xs={{span: 24}}>
                         <Typography.Text>Sort by</Typography.Text>
-                        <Select defaultValue={0} style={{ width: 150 }}>
-                            <Select.Option value={0}>{`A -> Z`}</Select.Option>
-                            <Select.Option value={1}>{`Z -> A`}</Select.Option>
-                            <Select.Option value={2}>Price: low to high</Select.Option>
-                            <Select.Option value={3}>Price: high to low</Select.Option>
+                        <Select defaultValue={sortVal} style={{ width: 150 }} onChange={ value => handleChangeValueSort(value)}>
+                            <Select.Option value={0}>Default</Select.Option>
+                            <Select.Option value={1}>{`A -> Z`}</Select.Option>
+                            <Select.Option value={2}>{`Z -> A`}</Select.Option>
+                            <Select.Option value={3}>Price: low to high</Select.Option>
+                            <Select.Option value={4}>Price: high to low</Select.Option>
                         </Select>
                     </Col>
                 </Row>
