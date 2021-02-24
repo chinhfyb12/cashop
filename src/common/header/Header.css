@@ -67,6 +67,43 @@
   height: 45px;
 }
 
+.header .container-action .box-tools .tool.search .ant-list {
+  background: white;
+  z-index: 99999;
+  -webkit-box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.02), 0 6.7px 5.3px rgba(0, 0, 0, 0.028), 0 12.5px 10px rgba(0, 0, 0, 0.035), 0 22.3px 17.9px rgba(0, 0, 0, 0.042), 0 41.8px 33.4px rgba(0, 0, 0, 0.05), 0 100px 80px rgba(0, 0, 0, 0.07);
+          box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.02), 0 6.7px 5.3px rgba(0, 0, 0, 0.028), 0 12.5px 10px rgba(0, 0, 0, 0.035), 0 22.3px 17.9px rgba(0, 0, 0, 0.042), 0 41.8px 33.4px rgba(0, 0, 0, 0.05), 0 100px 80px rgba(0, 0, 0, 0.07);
+}
+
+.header .container-action .box-tools .tool.search .ant-list.active {
+  display: none;
+}
+
+.header .container-action .box-tools .tool.search .ant-list-item {
+  padding: 0;
+}
+
+.header .container-action .box-tools .tool.search .ant-list-item a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  padding: 10px 8px;
+  color: black;
+  -webkit-transition: .3s;
+  transition: .3s;
+  font-size: 0.9rem;
+}
+
+.header .container-action .box-tools .tool.search .ant-list-item a:hover {
+  background: #f5f5f5;
+}
+
 .header .container-action .box-tools .tool .ant-btn {
   display: -webkit-box;
   display: -ms-flexbox;

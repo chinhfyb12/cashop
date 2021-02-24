@@ -5,5 +5,6 @@ router.get('/collections/get', productsController.getProducts)
 router.post('/collections/add', productsController.createProduct)
 router.get('/collections/product', productsController.getProduct)
 router.get('/collections/productsrelated', productsController.getProductsRelated)
+router.get('/collections/search', productsController.findProducts)
 
 module.exports = router;

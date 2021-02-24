@@ -38,7 +38,8 @@
 
 .ant-modal .ant-modal-content .ant-modal-body .box-product .box-name .product-link {
   color: black;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
 }
 
 .ant-modal .ant-modal-content .ant-modal-body .box-product .box-name .product-link:hover {

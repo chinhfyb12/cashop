@@ -34,8 +34,9 @@
 }
 
 .box-product-detail .box-img .box-info h1.ant-typography {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   margin: 0;
+  text-transform: uppercase;
 }
 
 .box-product-detail .box-img .box-info .ant-list .ant-list-item .ant-btn:focus {

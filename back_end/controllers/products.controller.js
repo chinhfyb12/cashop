@@ -32,6 +32,7 @@ class ProductsController {
                     })
                     .skip(pageSize*(parseInt(queriesObj.page - 1)))
                     .limit(pageSize)
+                    .sort(parseInt(queriesObj.sort) === 3 ? JSON.parse('{"price": "1"}') : parseInt(queriesObj.sort) === 4 ? JSON.parse('{"price": "-1"}') : parseInt(queriesObj.sort) === 2 ? JSON.parse('{"nameProduct": "-1"}') : parseInt(queriesObj.sort) === 1 ? JSON.parse('{"nameProduct": "1"}') : '')
                     .then(products => { return products })
 
                     const maxProducts = await ProductsModel.countDocuments({
@@ -67,11 +68,6 @@ class ProductsController {
                     .limit(pageSize)
                     .sort(parseInt(queriesObj.sort) === 3 ? JSON.parse('{"price": "1"}') : parseInt(queriesObj.sort) === 4 ? JSON.parse('{"price": "-1"}') : parseInt(queriesObj.sort) === 2 ? JSON.parse('{"nameProduct": "-1"}') : parseInt(queriesObj.sort) === 1 ? JSON.parse('{"nameProduct": "1"}') : '')
                     .then(products => { return products })
-
-                    // if(parseInt(queriesObj.sort) === 1) {
-                    //     products.sort({ price: 1 })
-                    //     console.log('bang')
-                    // }
 
                     const maxProducts = await ProductsModel.countDocuments({
                         categories: queriesObj.category1
@@ -111,6 +107,16 @@ class ProductsController {
             .then(products => res.json(products))
         } catch (err) {
             res.status(500).json('Error: ', err)
+        }
+    }
+    async findProducts(req, res) {
+        try {
+            const queriesObj = { ...req.query }
+            ProductsModel.find({
+                'nameProduct': { '$regex': queriesObj.q, '$options': 'i' }
+            }).then(products => res.json(products))
+        } catch (err) {
+            res.status(500).json(err)
         }
     }
     async createProduct(req, res) {
